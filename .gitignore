@@ -1,0 +1,17 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.log
+
+## dotnet publish
+publish/
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+
+## Docker
+docker-compose.override.yml

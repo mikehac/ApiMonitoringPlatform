@@ -1,0 +1,18 @@
+services:
+  fake-target-api:
+    build: .
+    container_name: fake-target-api
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Simulation__DelayMs=0
+      - Simulation__FailureRate=0.0
+      - Simulation__ReportsExtraDelayMs=3000
+      - Simulation__ExternalFailureRate=0.3
+      - Jwt__Key=super-secret-key-for-fake-api-testing-32chars!!
+      - Jwt__Issuer=FakeTargetApi
+      - Jwt__Audience=FakeTargetApiUsers
+      - Jwt__TestUser=testuser
+      - Jwt__TestPassword=testpass
+    restart: unless-stopped
