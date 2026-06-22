@@ -1,6 +1,33 @@
 @FakeTargetApi_HostAddress = http://localhost:5067
 
-GET {{FakeTargetApi_HostAddress}}/weatherforecast/
+GET {{FakeTargetApi_HostAddress}}/health/
 Accept: application/json
 
 ###
+
+GET {{FakeTargetApi_HostAddress}}/products/
+
+###
+POST {{FakeTargetApi_HostAddress}}/products
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Widget C",
+  "price": 29.99
+}
+
+###
+PUT {{FakeTargetApi_HostAddress}}/products/2
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Widget C",
+  "price": 29.99
+}
+
+###
+
+GET {{FakeTargetApi_HostAddress}}/reports
+Accept: application/json
