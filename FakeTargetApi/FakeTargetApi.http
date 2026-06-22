@@ -1,13 +1,30 @@
 @FakeTargetApi_HostAddress = http://localhost:5067
 
-GET {{FakeTargetApi_HostAddress}}/health/
+### Health check
+GET {{FakeTargetApi_HostAddress}}/health
 Accept: application/json
 
 ###
 
-GET {{FakeTargetApi_HostAddress}}/products/
+### Get JWT token (store as @token for /orders)
+# @name login
+POST {{FakeTargetApi_HostAddress}}/auth/token
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "testpass"
+}
 
 ###
+
+### List all products
+GET {{FakeTargetApi_HostAddress}}/products
+Accept: application/json
+
+###
+
+### Create a product
 POST {{FakeTargetApi_HostAddress}}/products
 Accept: application/json
 Content-Type: application/json
@@ -18,16 +35,37 @@ Content-Type: application/json
 }
 
 ###
+
+### Update a product
 PUT {{FakeTargetApi_HostAddress}}/products/2
 Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "Widget C",
-  "price": 29.99
+  "name": "Widget C Updated",
+  "price": 39.99
 }
 
 ###
 
+### Delete a product
+DELETE {{FakeTargetApi_HostAddress}}/products/2
+
+###
+
+### Get orders (requires Bearer token from /auth/token)
+GET {{FakeTargetApi_HostAddress}}/orders
+Accept: application/json
+Authorization: Bearer {{login.response.body.token}}
+
+###
+
+### Get reports (slow — adds ReportsExtraDelayMs on top of global DelayMs)
 GET {{FakeTargetApi_HostAddress}}/reports
+Accept: application/json
+
+###
+
+### Get external data (flaky — 30% chance of 503 by default)
+GET {{FakeTargetApi_HostAddress}}/external-data
 Accept: application/json
