@@ -10,7 +10,7 @@ namespace Watchtower.Application.Features.Auth;
 public record RegisterUserCommand(string Email, string Password, string DisplayName)
     : IRequest<RegisterUserResult>;
 
-public record RegisterUserResult(Guid UserId, string Email);
+public record RegisterUserResult(Guid UserId, string Email, string EmailVerificationToken);
 
 public class RegisterUserValidator : AbstractValidator<RegisterUserCommand>
 {
@@ -43,6 +43,6 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, Register
 
         await _email.SendEmailVerificationAsync(user.Email, user.EmailVerificationToken!, ct);
 
-        return new RegisterUserResult(user.Id, user.Email);
+        return new RegisterUserResult(user.Id, user.Email, user.EmailVerificationToken!);
     }
 }

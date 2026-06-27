@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="docker-compose.yml" />
+  </Folder>
   <Project Path="Watchtower/Watchtower.Api/Watchtower.Api.csproj" />
   <Project Path="Watchtower/Watchtower.Application/Watchtower.Application.csproj" />
   <Project Path="Watchtower/Watchtower.Domain/Watchtower.Domain.csproj" />

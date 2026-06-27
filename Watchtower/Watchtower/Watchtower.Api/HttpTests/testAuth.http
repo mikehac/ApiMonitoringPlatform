@@ -1,5 +1,13 @@
 @baseUrl = http://localhost:5220
 
+# Step 1: Register — response body includes "emailVerificationToken"
+# Copy that value into @verifyToken below before running step 4.
+@verifyToken = PASTE_emailVerificationToken_FROM_REGISTER_RESPONSE
+
+# Step 5+6: Forgot Password — response body includes "devPasswordResetToken"
+# Copy that value into @resetToken below before running step 6.
+@resetToken = PASTE_devPasswordResetToken_FROM_FORGOT_PASSWORD_RESPONSE
+
 ### 1. Register
 POST {{baseUrl}}/auth/register
 Content-Type: application/json
@@ -24,18 +32,18 @@ POST {{baseUrl}}/auth/refresh
 Content-Type: application/json
 
 {
-  "token": "PASTE_REFRESH_TOKEN_HERE"
+  "token": "3vqIBu7alhR8ofZMh3dQ3AA9MlP5h8mhw5WH46v/xQPjK5Aq69FL77JLVUO0+vtpdwtd43apDbH+rWq8MEr2hA=="
 }
 
-### 4. Verify Email
+### 4. Verify Email  (paste emailVerificationToken from step 1 response into @verifyToken above)
 POST {{baseUrl}}/auth/verify-email
 Content-Type: application/json
 
 {
-  "token": "PASTE_VERIFICATION_TOKEN_FROM_SERVER_LOG_HERE"
+  "token": "{{verifyToken}}"
 }
 
-### 5. Forgot Password
+### 5. Forgot Password  (response contains devPasswordResetToken — paste into @resetToken above)
 POST {{baseUrl}}/auth/forgot-password
 Content-Type: application/json
 
@@ -43,11 +51,11 @@ Content-Type: application/json
   "email": "alice@example.com"
 }
 
-### 6. Reset Password
+### 6. Reset Password  (paste devPasswordResetToken from step 5 response into @resetToken above)
 POST {{baseUrl}}/auth/reset-password
 Content-Type: application/json
 
 {
-  "token": "PASTE_RESET_TOKEN_FROM_SERVER_LOG_HERE",
+  "token": "{{resetToken}}",
   "newPassword": "newpassword456"
 }

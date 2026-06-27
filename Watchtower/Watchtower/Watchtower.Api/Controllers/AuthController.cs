@@ -36,8 +36,8 @@ public class AuthController : ControllerBase
     [HttpPost("forgot-password")]
     public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command, CancellationToken ct)
     {
-        await _mediator.Send(command, ct);
-        return NoContent();
+        var devToken = await _mediator.Send(command, ct);
+        return Ok(new { devPasswordResetToken = devToken });
     }
 
     [HttpPost("reset-password")]

@@ -27,38 +27,38 @@ services:
       timeout: 3s
       retries: 10
 
-  api:
-    build:
-      context: .
-      dockerfile: Watchtower/Watchtower.Api/Dockerfile
-    ports:
-      - "5000:8080"
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__Postgres: "Host=postgres;Port=5432;Database=watchtower;Username=watchtower;Password=watchtower"
-      ConnectionStrings__Redis: "redis:6379"
-      Jwt__Secret: "${JWT_SECRET:-dev-secret-change-in-production-32chars}"
-      Jwt__Issuer: "watchtower-api"
-      Jwt__Audience: "watchtower-clients"
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: Watchtower/Watchtower.Api/Dockerfile
+  #   ports:
+  #     - "5000:8080"
+  #   environment:
+  #     ASPNETCORE_ENVIRONMENT: Development
+  #     ConnectionStrings__Postgres: "Host=postgres;Port=5432;Database=watchtower;Username=watchtower;Password=watchtower"
+  #     ConnectionStrings__Redis: "redis:6379"
+  #     Jwt__Secret: "${JWT_SECRET:-dev-secret-change-in-production-32chars}"
+  #     Jwt__Issuer: "watchtower-api"
+  #     Jwt__Audience: "watchtower-clients"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
 
-  worker:
-    build:
-      context: .
-      dockerfile: Watchtower/Watchtower.Worker/Dockerfile
-    environment:
-      DOTNET_ENVIRONMENT: Development
-      ConnectionStrings__Postgres: "Host=postgres;Port=5432;Database=watchtower;Username=watchtower;Password=watchtower"
-      ConnectionStrings__Redis: "redis:6379"
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+  # worker:
+  #   build:
+  #     context: .
+  #     dockerfile: Watchtower/Watchtower.Worker/Dockerfile
+  #   environment:
+  #     DOTNET_ENVIRONMENT: Development
+  #     ConnectionStrings__Postgres: "Host=postgres;Port=5432;Database=watchtower;Username=watchtower;Password=watchtower"
+  #     ConnectionStrings__Redis: "redis:6379"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
 
 volumes:
   postgres_data:
