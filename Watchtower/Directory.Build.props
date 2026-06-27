@@ -1,0 +1,8 @@
+<Project>
+  <ItemGroup>
+    <!-- Pin all EF Core packages to the same patch version solution-wide -->
+    <PackageReference Update="Microsoft.EntityFrameworkCore" Version="9.0.17" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Relational" Version="9.0.17" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Design" Version="9.0.17" />
+  </ItemGroup>
+</Project>

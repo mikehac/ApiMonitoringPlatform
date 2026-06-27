@@ -3,6 +3,7 @@ bin/
 obj/
 *.user
 *.suo
+*.rsuser
 .vs/
 *.log
 
@@ -12,6 +13,44 @@ publish/
 ## Build results
 [Dd]ebug/
 [Rr]elease/
+artifacts/
+out/
+
+## NuGet
+*.nupkg
+*.snupkg
+packages/
+
+## Test results
+TestResults/
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+*.coveragexml
+coverage*/
+
+## Rider / JetBrains
+.idea/
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+## VS Code
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
 
 ## Docker
 docker-compose.override.yml
+
+## Secrets / environment
+.env
+.env.*
+!.env.example
+!.env.template
+appsettings.*.local.json
+secrets.json
+
+## OS
+Thumbs.db
+.DS_Store
