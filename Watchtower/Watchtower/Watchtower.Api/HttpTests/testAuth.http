@@ -32,7 +32,7 @@ POST {{baseUrl}}/auth/refresh
 Content-Type: application/json
 
 {
-  "token": "3vqIBu7alhR8ofZMh3dQ3AA9MlP5h8mhw5WH46v/xQPjK5Aq69FL77JLVUO0+vtpdwtd43apDbH+rWq8MEr2hA=="
+  "token": "PASTE_REFRESH_TOKEN_HERE"
 }
 
 ### 4. Verify Email  (paste emailVerificationToken from step 1 response into @verifyToken above)
