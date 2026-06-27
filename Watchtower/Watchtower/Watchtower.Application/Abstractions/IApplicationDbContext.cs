@@ -9,6 +9,7 @@ public interface IApplicationDbContext
     DbSet<MonitoredEndpoint> Endpoints { get; }
     DbSet<CheckResult> CheckResults { get; }
     DbSet<Alert> Alerts { get; }
+    DbSet<RefreshToken> RefreshTokens { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 using Watchtower.Application.Abstractions;
 using Watchtower.Infrastructure.Persistence;
+using Watchtower.Infrastructure.Services;
 
 namespace Watchtower.Infrastructure;
 
@@ -26,6 +27,10 @@ public static class DependencyInjection
 
         services.AddStackExchangeRedisCache(options =>
             options.Configuration = redisConnectionString);
+
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
+        services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<IEmailService, EmailService>();
 
         return services;
     }

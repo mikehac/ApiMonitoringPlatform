@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Watchtower.Application\Watchtower.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="HttpTests\" />
+  </ItemGroup>
+
 </Project>

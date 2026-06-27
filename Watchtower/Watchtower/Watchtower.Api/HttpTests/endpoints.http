@@ -1,0 +1,51 @@
+@baseUrl = http://localhost:5220
+@token = PASTE_ACCESS_TOKEN_HERE
+@endpointId = PASTE_ENDPOINT_ID_HERE
+
+### 1. Get All Endpoints
+GET {{baseUrl}}/endpoints
+Authorization: Bearer {{token}}
+
+### 2. Get Endpoint By Id
+GET {{baseUrl}}/endpoints/{{endpointId}}
+Authorization: Bearer {{token}}
+
+### 3. Create Endpoint
+POST {{baseUrl}}/endpoints
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "FakeTarget Health",
+  "url": "http://localhost:8080/health",
+  "httpMethod": "GET",
+  "checkIntervalSeconds": 60,
+  "timeoutSeconds": 10,
+  "expectedStatusCode": 200,
+  "expectedBodyContains": null,
+  "maxResponseTimeMs": 3000
+}
+
+### 4. Update Endpoint
+PUT {{baseUrl}}/endpoints/{{endpointId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "FakeTarget Health (updated)",
+  "url": "http://localhost:8080/health",
+  "httpMethod": "GET",
+  "checkIntervalSeconds": 120,
+  "timeoutSeconds": 15,
+  "expectedStatusCode": 200,
+  "expectedBodyContains": null,
+  "maxResponseTimeMs": 5000
+}
+
+### 5. Toggle Endpoint (pause / resume)
+PATCH {{baseUrl}}/endpoints/{{endpointId}}/toggle
+Authorization: Bearer {{token}}
+
+### 6. Delete Endpoint
+DELETE {{baseUrl}}/endpoints/{{endpointId}}
+Authorization: Bearer {{token}}

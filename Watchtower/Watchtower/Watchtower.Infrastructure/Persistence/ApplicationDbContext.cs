@@ -13,6 +13,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<MonitoredEndpoint> Endpoints => Set<MonitoredEndpoint>();
     public DbSet<CheckResult> CheckResults => Set<CheckResult>();
     public DbSet<Alert> Alerts => Set<Alert>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
