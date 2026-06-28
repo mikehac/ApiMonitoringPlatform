@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:5220
-@token = PASTE_ACCESS_TOKEN_HERE
-@endpointId = PASTE_ENDPOINT_ID_HERE
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4YjI2NjMyOC0yOWI0LTQwYWQtYmFmMi0zN2MxNDNiMDY5NmMiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTc4MjU4MzgzMywiaXNzIjoid2F0Y2h0b3dlci1hcGkiLCJhdWQiOiJ3YXRjaHRvd2VyLWNsaWVudHMifQ.PL2tgExpt5T9GtrgQkVBhqqCiY1hH1DnIjLobgSx0dw
+@endpointId = 94139e58-0c4e-4da6-bff9-253ff37e54ed
 
 ### 1. Get All Endpoints
 GET {{baseUrl}}/endpoints
