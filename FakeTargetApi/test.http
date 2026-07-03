@@ -7,3 +7,8 @@ GET {{baseUrl}}/health
 ###
 GET {{baseUrl}}/products
 
+###
+GET {{baseUrl}}/external-data
+
+###
+GET {{baseUrl}}/reports
