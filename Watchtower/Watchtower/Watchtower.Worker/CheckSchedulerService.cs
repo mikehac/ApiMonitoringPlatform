@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Watchtower.Application.Abstractions;
 using Watchtower.Domain.Entities;
+using Watchtower.Domain.Enums;
 
 namespace Watchtower.Worker;
 
@@ -110,6 +111,7 @@ public class CheckSchedulerService : BackgroundService
         {
             using var scope = _scopeFactory.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
+            var alertingService = scope.ServiceProvider.GetRequiredService<IAlertingService>();
 
             var endpoint = await db.Endpoints
                 .FirstOrDefaultAsync(e => e.Id == endpointId, ct);
@@ -120,6 +122,7 @@ public class CheckSchedulerService : BackgroundService
                 return;
             }
 
+            var previousStatus = endpoint.Status;
             var (checkResult, newStatus) = await _checker.CheckAsync(endpoint, ct);
 
             db.CheckResults.Add(checkResult);
@@ -129,6 +132,8 @@ public class CheckSchedulerService : BackgroundService
             _logger.LogInformation(
                 "Checked [{Name}] {Url} — {Status} in {Ms}ms",
                 endpoint.Name, endpoint.Url, newStatus, checkResult.ResponseTimeMs);
+
+            await alertingService.HandleAsync(endpoint, previousStatus, ct);
 
             await _checkQueue.EnqueueAsync(endpointId, endpoint.CheckIntervalSeconds, ct);
         }

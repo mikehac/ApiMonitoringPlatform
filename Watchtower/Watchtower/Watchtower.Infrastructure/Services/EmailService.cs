@@ -21,4 +21,16 @@ public class EmailService : IEmailService
         _logger.LogInformation("[EMAIL] Password reset token for {Email}: {Token}", email, token);
         return Task.CompletedTask;
     }
+
+    public Task SendAlertOpenedAsync(string email, string endpointName, string endpointUrl, string reason, CancellationToken ct = default)
+    {
+        _logger.LogWarning("[EMAIL] ALERT OPENED → {Email} | [{Name}] {Url} | {Reason}", email, endpointName, endpointUrl, reason);
+        return Task.CompletedTask;
+    }
+
+    public Task SendAlertResolvedAsync(string email, string endpointName, string endpointUrl, CancellationToken ct = default)
+    {
+        _logger.LogInformation("[EMAIL] ALERT RESOLVED → {Email} | [{Name}] {Url}", email, endpointName, endpointUrl);
+        return Task.CompletedTask;
+    }
 }

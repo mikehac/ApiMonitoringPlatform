@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:5220
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4YjI2NjMyOC0yOWI0LTQwYWQtYmFmMi0zN2MxNDNiMDY5NmMiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTc4MjU4MzgzMywiaXNzIjoid2F0Y2h0b3dlci1hcGkiLCJhdWQiOiJ3YXRjaHRvd2VyLWNsaWVudHMifQ.PL2tgExpt5T9GtrgQkVBhqqCiY1hH1DnIjLobgSx0dw
-@endpointId = 94139e58-0c4e-4da6-bff9-253ff37e54ed
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4YjI2NjMyOC0yOWI0LTQwYWQtYmFmMi0zN2MxNDNiMDY5NmMiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTc4MzA5NjM3OCwiaXNzIjoid2F0Y2h0b3dlci1hcGkiLCJhdWQiOiJ3YXRjaHRvd2VyLWNsaWVudHMifQ.mCZDcB6LFAvzfCALK-wH59-RBhcbdscKrj5heiwXEy8
+@endpointId = 06420071-7745-4b35-b1b9-1def2a295d5e
 
 ### 1. Get All Endpoints
 GET {{baseUrl}}/endpoints
@@ -17,7 +17,7 @@ Content-Type: application/json
 
 {
   "name": "FakeTarget Health",
-  "url": "http://localhost:8080/health",
+  "url": "http://localhost:8080/reports",
   "httpMethod": "GET",
   "checkIntervalSeconds": 60,
   "timeoutSeconds": 10,

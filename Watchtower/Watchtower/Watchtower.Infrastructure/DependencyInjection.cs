@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
+using Watchtower.Application;
 using Watchtower.Application.Abstractions;
 using Watchtower.Infrastructure.Persistence;
 using Watchtower.Infrastructure.Services;
@@ -33,6 +34,11 @@ public static class DependencyInjection
         services.AddScoped<IEmailService, EmailService>();
 
         services.AddSingleton<IEndpointCheckQueue, RedisEndpointCheckQueue>();
+
+        services.AddScoped<IAlertingService, AlertingService>();
+
+        services.Configure<AlertingOptions>(
+            configuration.GetSection(AlertingOptions.SectionName));
 
         return services;
     }

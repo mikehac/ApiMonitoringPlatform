@@ -1,0 +1,9 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@baseUrl = http://localhost:8080
+
+###
+GET {{baseUrl}}/health
+
+###
+GET {{baseUrl}}/products
+

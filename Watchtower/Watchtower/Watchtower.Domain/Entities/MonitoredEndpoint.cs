@@ -13,6 +13,7 @@ public class MonitoredEndpoint
     public string? ExpectedBodyContains { get; private set; }
     public int? MaxResponseTimeMs { get; private set; }
     public EndpointStatus Status { get; private set; }
+    public int ConsecutiveFailures { get; private set; }
     public DateTime? LastCheckedAt { get; private set; }
     public bool IsActive { get; private set; }
     public DateTime CreatedAt { get; private set; }
@@ -80,6 +81,11 @@ public class MonitoredEndpoint
         Status = newStatus;
         LastCheckedAt = DateTime.UtcNow;
         UpdatedAt = DateTime.UtcNow;
+
+        if (newStatus == EndpointStatus.Down)
+            ConsecutiveFailures++;
+        else
+            ConsecutiveFailures = 0;
     }
 
     public void Deactivate()
