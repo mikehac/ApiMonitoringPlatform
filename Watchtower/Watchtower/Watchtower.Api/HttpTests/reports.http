@@ -1,0 +1,23 @@
+@baseUrl = http://localhost:5220
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4YjI2NjMyOC0yOWI0LTQwYWQtYmFmMi0zN2MxNDNiMDY5NmMiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTc4MzA5NjM3OCwiaXNzIjoid2F0Y2h0b3dlci1hcGkiLCJhdWQiOiJ3YXRjaHRvd2VyLWNsaWVudHMifQ.mCZDcB6LFAvzfCALK-wH59-RBhcbdscKrj5heiwXEy8
+@endpointId = 06420071-7745-4b35-b1b9-1def2a295d5e
+
+### 1. Check history (paginated)
+GET {{baseUrl}}/endpoints/{{endpointId}}/checks?page=1&pageSize=20
+Authorization: Bearer {{token}}
+
+### 2. Check stats — default range (last 24 hours)
+GET {{baseUrl}}/endpoints/{{endpointId}}/checks/stats
+Authorization: Bearer {{token}}
+
+### 3. Check stats — explicit range
+GET {{baseUrl}}/endpoints/{{endpointId}}/checks/stats?from=2026-07-01T00:00:00Z&to=2026-07-06T00:00:00Z
+Authorization: Bearer {{token}}
+
+### 4. Alert history (paginated)
+GET {{baseUrl}}/endpoints/{{endpointId}}/alerts?page=1&pageSize=20
+Authorization: Bearer {{token}}
+
+### 5. Dashboard summary
+GET {{baseUrl}}/dashboard
+Authorization: Bearer {{token}}

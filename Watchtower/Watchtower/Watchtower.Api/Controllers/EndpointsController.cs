@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Watchtower.Api.Extensions;
 using Watchtower.Application.Features.Endpoints;
+using Watchtower.Application.Features.Reports;
 
 namespace Watchtower.Api.Controllers;
 
@@ -57,6 +58,21 @@ public class EndpointsController : ControllerBase
         var isActive = await _mediator.Send(new ToggleEndpointCommand(id, User.GetUserId()), ct);
         return Ok(new { isActive });
     }
+
+    [HttpGet("{id:guid}/checks")]
+    public async Task<IActionResult> GetChecks(
+        Guid id, [FromQuery] int page = 1, [FromQuery] int pageSize = 20, CancellationToken ct = default) =>
+        Ok(await _mediator.Send(new GetEndpointChecksQuery(id, User.GetUserId(), page, pageSize), ct));
+
+    [HttpGet("{id:guid}/checks/stats")]
+    public async Task<IActionResult> GetCheckStats(
+        Guid id, [FromQuery] DateTime? from = null, [FromQuery] DateTime? to = null, CancellationToken ct = default) =>
+        Ok(await _mediator.Send(new GetEndpointCheckStatsQuery(id, User.GetUserId(), from, to), ct));
+
+    [HttpGet("{id:guid}/alerts")]
+    public async Task<IActionResult> GetAlerts(
+        Guid id, [FromQuery] int page = 1, [FromQuery] int pageSize = 20, CancellationToken ct = default) =>
+        Ok(await _mediator.Send(new GetEndpointAlertsQuery(id, User.GetUserId(), page, pageSize), ct));
 }
 
 public record CreateEndpointRequest(
