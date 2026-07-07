@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Watchtower.Application.Abstractions;
+using Watchtower.Application.Events;
 using Watchtower.Domain.Entities;
 using Watchtower.Domain.Enums;
 
@@ -15,17 +16,20 @@ public class CheckSchedulerService : BackgroundService
     private readonly IServiceScopeFactory _scopeFactory;
     private readonly IEndpointCheckQueue _checkQueue;
     private readonly EndpointHttpChecker _checker;
+    private readonly IMonitoringEventPublisher _eventPublisher;
     private readonly ILogger<CheckSchedulerService> _logger;
 
     public CheckSchedulerService(
         IServiceScopeFactory scopeFactory,
         IEndpointCheckQueue checkQueue,
         EndpointHttpChecker checker,
+        IMonitoringEventPublisher eventPublisher,
         ILogger<CheckSchedulerService> logger)
     {
         _scopeFactory = scopeFactory;
         _checkQueue = checkQueue;
         _checker = checker;
+        _eventPublisher = eventPublisher;
         _logger = logger;
     }
 
@@ -132,6 +136,19 @@ public class CheckSchedulerService : BackgroundService
             _logger.LogInformation(
                 "Checked [{Name}] {Url} — {Status} in {Ms}ms",
                 endpoint.Name, endpoint.Url, newStatus, checkResult.ResponseTimeMs);
+
+            if (newStatus != previousStatus)
+            {
+                await _eventPublisher.PublishAsync(new EndpointStatusChangedEvent(
+                    endpoint.OwnerId,
+                    endpoint.Id,
+                    endpoint.Name,
+                    endpoint.Url,
+                    previousStatus.ToString(),
+                    newStatus.ToString(),
+                    checkResult.ResponseTimeMs,
+                    checkResult.CheckedAt), ct);
+            }
 
             await alertingService.HandleAsync(endpoint, previousStatus, ct);
 

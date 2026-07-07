@@ -34,6 +34,7 @@ public static class DependencyInjection
         services.AddScoped<IEmailService, EmailService>();
 
         services.AddSingleton<IEndpointCheckQueue, RedisEndpointCheckQueue>();
+        services.AddSingleton<IMonitoringEventPublisher, RedisMonitoringEventPublisher>();
 
         services.AddScoped<IAlertingService, AlertingService>();
 

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Watchtower.Application;
 using Watchtower.Application.Abstractions;
+using Watchtower.Application.Events;
 using Watchtower.Domain.Entities;
 using Watchtower.Domain.Enums;
 
@@ -12,17 +13,20 @@ public class AlertingService : IAlertingService
 {
     private readonly IApplicationDbContext _db;
     private readonly IEmailService _emailService;
+    private readonly IMonitoringEventPublisher _eventPublisher;
     private readonly AlertingOptions _options;
     private readonly ILogger<AlertingService> _logger;
 
     public AlertingService(
         IApplicationDbContext db,
         IEmailService emailService,
+        IMonitoringEventPublisher eventPublisher,
         IOptions<AlertingOptions> options,
         ILogger<AlertingService> logger)
     {
         _db = db;
         _emailService = emailService;
+        _eventPublisher = eventPublisher;
         _options = options.Value;
         _logger = logger;
     }
@@ -57,6 +61,15 @@ public class AlertingService : IAlertingService
 
         _logger.LogWarning("Alert opened for [{Name}] {Url}: {Reason}", endpoint.Name, endpoint.Url, reason);
 
+        await _eventPublisher.PublishAsync(new AlertOpenedEvent(
+            endpoint.OwnerId,
+            alert.Id,
+            endpoint.Id,
+            endpoint.Name,
+            endpoint.Url,
+            alert.Reason,
+            alert.TriggeredAt), ct);
+
         var ownerEmail = await GetOwnerEmailAsync(endpoint.OwnerId, ct);
         if (ownerEmail is not null)
             await TrySendEmailAsync(
@@ -76,6 +89,16 @@ public class AlertingService : IAlertingService
         await _db.SaveChangesAsync(ct);
 
         _logger.LogInformation("Alert resolved for [{Name}] {Url}.", endpoint.Name, endpoint.Url);
+
+        await _eventPublisher.PublishAsync(new AlertResolvedEvent(
+            endpoint.OwnerId,
+            alert.Id,
+            endpoint.Id,
+            endpoint.Name,
+            endpoint.Url,
+            alert.TriggeredAt,
+            alert.ResolvedAt!.Value,
+            (alert.ResolvedAt.Value - alert.TriggeredAt).TotalSeconds), ct);
 
         var ownerEmail = await GetOwnerEmailAsync(endpoint.OwnerId, ct);
         if (ownerEmail is not null)

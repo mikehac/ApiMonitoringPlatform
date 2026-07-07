@@ -2,7 +2,9 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Watchtower.Api.Hubs;
 using Watchtower.Api.Middleware;
+using Watchtower.Api.Services;
 using Watchtower.Application;
 using Watchtower.Infrastructure;
 using Watchtower.Infrastructure.Persistence;
@@ -16,6 +18,7 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddSignalR();
+builder.Services.AddHostedService<MonitoringEventForwarder>();
 
 var jwtKey = builder.Configuration["Jwt:Secret"]
     ?? throw new InvalidOperationException("Jwt:Secret is not configured.");
@@ -68,6 +71,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<WatchtowerHub>("/hubs/watchtower");
 
 app.MapGet("/health/live", () => Results.Ok(new { status = "alive" }));
 app.MapGet("/health/ready", async (Watchtower.Application.Abstractions.IApplicationDbContext db, CancellationToken ct) =>
